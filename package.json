@@ -1,0 +1,9 @@
+{
+  "name": "uisarang-thumbnail-generator",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "release": "node scripts/release.mjs"
+  }
+}
