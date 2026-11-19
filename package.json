@@ -5,5 +5,8 @@
   "engines": { "node": ">=18" },
   "scripts": {
     "release": "node scripts/release.mjs"
+  },
+  "dependencies": {
+    "@vercel/blob": "^0.27.3"
   }
 }
