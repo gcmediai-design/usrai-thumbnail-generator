@@ -712,8 +712,14 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
 document.addEventListener('scroll',hide,true);document.addEventListener('keydown',function(e){if(e.key==='Escape')hide()});})();
 
 /* ---------- 저장 목록 드로어 ---------- */
-function openHist(){var d=$('histDrawer'),sc=$('histScrim');d.hidden=false;sc.hidden=false;requestAnimationFrame(function(){d.classList.add('on');sc.classList.add('on')});$('histOpen').setAttribute('aria-expanded','true');setTimeout(function(){$('histClose').focus()},60);}
-function closeHist(){var d=$('histDrawer'),sc=$('histScrim');if(d.hidden)return;d.classList.remove('on');sc.classList.remove('on');$('histOpen').setAttribute('aria-expanded','false');setTimeout(function(){d.hidden=true;sc.hidden=true},240);$('histOpen').focus();}
+function openHist(){var d=$('histDrawer'),sc=$('histScrim');d.hidden=false;sc.hidden=false;requestAnimationFrame(function(){d.classList.add('on');sc.classList.add('on')});$('histOpen').setAttribute('aria-expanded','true');setTimeout(function(){$('histClose').focus()},60);renderHist();histStartPoll();}
+function closeHist(){var d=$('histDrawer'),sc=$('histScrim');if(d.hidden)return;histStopPoll();d.classList.remove('on');sc.classList.remove('on');$('histOpen').setAttribute('aria-expanded','false');setTimeout(function(){d.hidden=true;sc.hidden=true},240);$('histOpen').focus();}
+/* 새로고침 없이 공유 목록 동기화: 열려 있는 동안 주기적으로 서버에서 다시 불러옴(변경 있을 때만 다시 그림) */
+var histPoll=null;
+function histStartPoll(){histStopPoll();if(!SAVE_API)return;histPoll=setInterval(function(){if(!document.hidden&&!$('histDrawer').hidden)renderHist();},15000);}
+function histStopPoll(){if(histPoll){clearInterval(histPoll);histPoll=null;}}
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&!$('histDrawer').hidden)renderHist();});
+window.addEventListener('focus',function(){if(!$('histDrawer').hidden)renderHist();});
 $('histOpen').addEventListener('click',openHist);$('histClose').addEventListener('click',closeHist);$('histScrim').addEventListener('click',closeHist);
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('histDrawer').hidden)closeHist()});
 
@@ -930,10 +936,11 @@ async function remotePut(rec){if(!SAVE_API)return;try{var body={id:rec.id,at:rec
 async function remoteDel(id){if(!SAVE_API)return;try{await fetch(SAVE_API+'?id='+encodeURIComponent(id),{method:'DELETE'});}catch(e){}}
 async function remoteClear(scope){if(!SAVE_API)return;try{await fetch(SAVE_API+'?'+(scope?('scope='+scope):'all=1'),{method:'DELETE'});}catch(e){}}
 async function remoteState(id){if(!SAVE_API)return null;try{var r=await fetch(SAVE_API+'?state='+encodeURIComponent(id),{cache:'no-store'});if(!r.ok)return null;return await r.json();}catch(e){return null;}}
-var histF='all';function b0(f){return f==='all'?'전체 삭제':(f==='case'?'고객 사례':'진료실 칼럼')+' 삭제'}
+var histF='all',histSig='';function b0(f){return f==='all'?'전체 삭제':(f==='case'?'고객 사례':'진료실 칼럼')+' 삭제'}
 async function renderHist(){
   var local=await dbAll(),remote=await remoteAll(),map={};remote.forEach(function(r){map[r.id]=r});local.forEach(function(l){map[l.id]=l});
   var all=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return b.at-a.at});
+  var sig=histF+'|'+all.map(function(it){return it.id+':'+it.at}).join(',');if(sig===histSig)return;histSig=sig;
   var h=$('hist'),nC=all.filter(function(it){return !isCase(it.tpl)}).length,nB=all.length-nC;$('histCnt').textContent=all.length;$('histCnt').hidden=!all.length;
   $('histF').innerHTML=[['all','전체',all.length],['col','진료실 칼럼',nC],['case','고객 사례',nB]].map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(histF===f[0])+'">'+f[1]+' <span class="n">'+f[2]+'</span></button>'}).join('');
   $('histF').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){histF=b.dataset.f;renderHist()})});
