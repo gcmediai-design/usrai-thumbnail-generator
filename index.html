@@ -212,7 +212,22 @@ summary .ic{transition:transform .15s;color:var(--text-tertiary)}details[open]>s
 .thumbBox.empty img{display:none}
 .searchBox{position:relative;margin-top:8px}.searchBox .ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);pointer-events:none}.searchBox input{padding-left:32px}
 .link .ic{margin-left:2px}
-.badgeSel{position:relative}.badgeSel select{padding-right:60px}
+.badgeSel{position:relative}
+#badgePick select{display:none}
+.badgeBtn{width:100%;display:flex;align-items:center;gap:8px;padding:9px 11px;border:1px solid var(--line-default);border-radius:6px;background:#fff;cursor:pointer;font:inherit;color:var(--text-main);text-align:left}
+.badgeBtn:hover{border-color:var(--text-tertiary)}
+.badgeBtn[aria-expanded=true]{border-color:var(--brand-primary);box-shadow:0 0 0 3px rgba(79,41,229,.15)}
+#badgeBtn #badgeSw{position:static;width:12px;height:12px;flex:none;border-radius:999px}
+.badgeBtn .t{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badgeBtn .car{display:flex;color:var(--text-tertiary);transition:transform .15s}
+.badgeBtn[aria-expanded=true] .car{transform:rotate(180deg)}
+.badgePop{padding:6px;max-height:280px;overflow:auto}
+.badgePop .opt{width:100%;display:flex;align-items:center;gap:8px;padding:8px 10px;border:0;background:none;border-radius:6px;cursor:pointer;font:inherit;font-size:14px;color:var(--text-main);text-align:left}
+.badgePop .opt:hover{background:#f4f5f6}
+.badgePop .opt[aria-selected=true]{background:#eef0ff;color:var(--brand-primary);font-weight:600}
+.badgePop .opt .dot{width:12px;height:12px;border-radius:999px;flex:none}
+.badgePop .opt .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badgePop .opt .chk{display:flex;color:var(--brand-primary)}.badgeSel select{padding-right:60px}
 #badgeSw{position:absolute;right:34px;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:999px;background:#4F29E5;pointer-events:none}
 .bdgList{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.bdgList:empty{display:none}.bdgList span{display:inline-flex;align-items:center;gap:6px;padding:3px 4px 3px 10px;border-radius:999px;background:var(--bg-subtle);font-size:12px;font-weight:600;color:var(--text-sub)}.bdgList i{width:10px;height:10px;border-radius:50%}.bdgList button{border:0;background:none;color:var(--text-tertiary);cursor:pointer;display:flex;padding:2px}
 /* MediAI DS · Button type=assistive (sm 28px · radius 4 · 13px Regular · brand subtle bg) */
@@ -305,7 +320,7 @@ details.qa label{display:flex;gap:8px;align-items:center;font-size:13px;line-hei
     </div>
     <div class="field" data-show="B B2">
       <label>카테고리 뱃지</label>
-      <div class="badgeSel"><select id="badge"><option>고객 사례</option><option selected>원장님 후기</option><option>과목별 사례</option></select><span id="badgeSw" aria-hidden="true"></span></div>
+      <div class="badgeSel picker" id="badgePick"><select id="badge" tabindex="-1" aria-hidden="true"><option>고객 사례</option><option selected>원장님 후기</option><option>과목별 사례</option></select><button type="button" class="badgeBtn" id="badgeBtn" aria-haspopup="listbox" aria-expanded="false"><span id="badgeSw" aria-hidden="true"></span><span class="t" id="badgeBtnLbl"></span><span class="car"><svg class="ic" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6L8 10L12 6"/></svg></span></button><div class="pop badgePop" id="badgePop" role="listbox" hidden></div></div>
       <button class="btn assist" id="bdgAdd" type="button" style="margin-top:8px;width:100%" aria-expanded="false"><svg class="ic" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.33334V12.6667"/><path d="M3.33301 8H12.6663"/></svg>카테고리 추가</button>
       <div class="catform" id="bdgForm" hidden>
         <div class="field" style="margin-top:0"><label for="bdgName">카테고리 이름 <span class="cnt">최대 10자</span></label><input type="text" id="bdgName" maxlength="10" placeholder="예: 도입 사례"></div>
@@ -511,11 +526,11 @@ var TPL={
       obj:{x:1128,y:528,s:360},
       sample:'삭감을 줄이는 상병 기재,\n기록에서 먼저 챙길 것'},
   B:{name:'B 고객 사례',board:'고객 사례',w:1600,h:900,sq:false,
-      badge:{x:112,y:96,h:96,px:44,size:56,weight:700},
+      badge:{x:72,y:96,h:104,px:40,size:56,weight:700,r:20},
       title:{size:96,lh:1.35,weight:700,x:112,w:1376,bottom:126,maxLines:2},
       sample:'“지난 25년의 변화보다,\n최근 1개월의 변화가 더 큽니다”'},
   B2:{name:'B-2 오브젝트',board:'고객 사례',w:1600,h:900,sq:false,
-      badge:{x:112,y:96,h:96,px:44,size:56,weight:700},
+      badge:{x:72,y:96,h:104,px:40,size:56,weight:700,r:20},
       title:{size:96,lh:1.35,weight:700,x:112,w:1376,bottom:126,maxLines:2},
       obj:{x:1010,y:56,s:480},
       sample:'“지난 25년의 변화보다,\n최근 1개월의 변화가 더 큽니다”'}
@@ -688,7 +703,7 @@ function render(ctx,opt){
     else if(preview){ctx.save();ctx.fillStyle='rgba(255,255,255,.06)';for(var i=-900;i<1600;i+=56){ctx.beginPath();ctx.moveTo(i,900);ctx.lineTo(i+900,0);ctx.lineTo(i+928,0);ctx.lineTo(i+28,900);ctx.fill();}
       ctx.fillStyle='rgba(255,255,255,.55)';ctx.font='500 36px '+FONT;try{ctx.letterSpacing='0px'}catch(e){};ctx.textAlign='center';ctx.fillText('실사 이미지를 올려 주세요',800,340);ctx.textAlign='left';ctx.restore();}
     var gr=ctx.createLinearGradient(0,900,0,120);for(var k=0;k<=12;k++){var u=k/12,e=Math.pow(1-u,2.2);gr.addColorStop(u,'rgba(0,0,0,'+(.62*e).toFixed(3)+')');}ctx.fillStyle=gr;ctx.fillRect(0,120,1600,780);
-    if($('optBadge').checked){var b=P.badge;setFont(ctx,b.size,b.weight);var bt=$('badge').value,bw=ctx.measureText(bt).width+b.px*2;ctx.fillStyle=BADGE_COL[bt]||TOKENS.brand;rr(ctx,b.x,b.y,bw,b.h,b.h/2);ctx.fill();ctx.fillStyle='#fff';var m=metrics(ctx);ctx.fillText(bt,b.x+b.px,b.y+(b.h-(m.a+m.d))/2+m.a);}
+    if($('optBadge').checked){var b=P.badge;setFont(ctx,b.size,b.weight);var bt=$('badge').value,bw=ctx.measureText(bt).width+b.px*2;ctx.fillStyle=BADGE_COL[bt]||TOKENS.brand;rr(ctx,b.x,b.y,bw,b.h,b.r||b.h/2);ctx.fill();ctx.fillStyle='#fff';var m=metrics(ctx);ctx.fillText(bt,b.x+b.px,b.y+(b.h-(m.a+m.d))/2+m.a);}
     setFont(ctx,P.title.size,P.title.weight);var tl3=wrap(ctx,title,P.title.w),th3=tl3.length*P.title.size*P.title.lh,top3=900-P.title.bottom-th3;ctx.fillStyle='#fff';drawLines(ctx,tl3,P.title.x,top3,P.title.size,P.title.lh);
     res={title:tl3.length};
     if(opt.guide)guides(ctx,1600,900,[[P.title.x,top3,P.title.w,th3]],false);
@@ -702,7 +717,7 @@ function render(ctx,opt){
       ctx.save();ctx.translate(t.tx,t.ty);ctx.scale(t.s,t.s);ctx.clip(t.p);ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle=dg;ctx.fillRect(0,0,1600,900);ctx.restore();}
     drawObjects(ctx,P.obj,preview,false,1600,900);
     var gq=ctx.createLinearGradient(0,900,0,100);for(var q=0;q<=16;q++){var u=q/16,t=1-u,e=t*t*(3-2*t);gq.addColorStop(u,hexA(W.deep,(.6*Math.pow(e,1.1)).toFixed(3)));}ctx.fillStyle=gq;ctx.fillRect(0,100,1600,800);
-    if($('optBadge').checked){var b=P.badge;setFont(ctx,b.size,b.weight);var bt=$('badge').value,bw=ctx.measureText(bt).width+b.px*2;var bc=BADGE_COL[bt]||TOKENS.brand;ctx.fillStyle=bc;rr(ctx,b.x,b.y,bw,b.h,b.h/2);ctx.fill();ctx.fillStyle='#fff';var m=metrics(ctx);ctx.fillText(bt,b.x+b.px,b.y+(b.h-(m.a+m.d))/2+m.a);}
+    if($('optBadge').checked){var b=P.badge;setFont(ctx,b.size,b.weight);var bt=$('badge').value,bw=ctx.measureText(bt).width+b.px*2;var bc=BADGE_COL[bt]||TOKENS.brand;ctx.fillStyle=bc;rr(ctx,b.x,b.y,bw,b.h,b.r||b.h/2);ctx.fill();ctx.fillStyle='#fff';var m=metrics(ctx);ctx.fillText(bt,b.x+b.px,b.y+(b.h-(m.a+m.d))/2+m.a);}
     setFont(ctx,P.title.size,P.title.weight);var tl4=wrap(ctx,title,P.title.w),th4=tl4.length*P.title.size*P.title.lh,top4=900-P.title.bottom-th4;ctx.fillStyle='#fff';drawLines(ctx,tl4,P.title.x,top4,P.title.size,P.title.lh);
     res={title:tl4.length};
     if(opt.guide)guides(ctx,1600,900,[[P.title.x,top4,P.title.w,th4]],false);
@@ -865,6 +880,17 @@ document.querySelectorAll('#tplTabs button').forEach(function(b){b.addEventListe
 document.querySelectorAll('#boardTabs button').forEach(function(b){b.addEventListener('click',function(){setTpl(b.dataset.board==='case'?(S.caseTpl||'B'):(S.colTpl||'A1'))})});
 $('title').addEventListener('input',function(){S.titles[S.tpl]=this.value;update()});
 $('badge').addEventListener('change',function(){$('badgeSw').style.background=BADGE_COL[this.value]||'#4F29E5'});
+/* 카테고리 뱃지 커스텀 드롭다운 (네이티브 select는 숨은 상태 소스) */
+function badgeUI(){var sel=$('badge'),btn=$('badgeBtn'),pop=$('badgePop');if(!btn||!pop)return;
+  $('badgeBtnLbl').textContent=sel.value;$('badgeSw').style.background=BADGE_COL[sel.value]||'#4F29E5';
+  pop.innerHTML='';Array.prototype.forEach.call(sel.options,function(o){var on=o.value===sel.value,b=document.createElement('button');b.type='button';b.className='opt';b.setAttribute('role','option');b.setAttribute('aria-selected',on?'true':'false');
+    b.innerHTML='<span class="dot"></span><span class="nm"></span>'+(on?'<span class="chk">'+IC('check',16)+'</span>':'');
+    b.querySelector('.dot').style.background=BADGE_COL[o.value]||'#4F29E5';b.querySelector('.nm').textContent=o.value;
+    b.addEventListener('click',function(){sel.value=o.value;sel.dispatchEvent(new Event('change',{bubbles:true}));badgeUI();$('badgePop').hidden=true;$('badgeBtn').setAttribute('aria-expanded','false');});
+    pop.appendChild(b);});}
+$('badgeBtn').addEventListener('click',function(e){e.stopPropagation();var pop=$('badgePop');if(pop.hidden){badgeUI();pop.hidden=false;this.setAttribute('aria-expanded','true');}else{pop.hidden=true;this.setAttribute('aria-expanded','false');}});
+document.addEventListener('click',function(e){if($('badgePick')&&!$('badgePick').contains(e.target)){$('badgePop').hidden=true;$('badgeBtn').setAttribute('aria-expanded','false');}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('badgePop')&&!$('badgePop').hidden){$('badgePop').hidden=true;$('badgeBtn').setAttribute('aria-expanded','false');}});
 /* B 카테고리 직접 추가 (이 브라우저에 저장) */
 var BDG_KEY='uisarang-thumb:badges',BDG_PAL=['#4F29E5','#0E7C6B','#B9472A','#1F5FBF','#B4235F','#8A5A00','#3D4A5C'],bdgCol=BDG_PAL[3];
 function bdgLoad(){try{return JSON.parse(localStorage.getItem(BDG_KEY)||'[]')}catch(e){return []}}
@@ -874,7 +900,7 @@ function bdgRender(keep){var sel=$('badge'),cur=keep||sel.value,base=['고객 �
   sel.innerHTML='';base.concat(cs.map(function(c){return c.name})).forEach(function(n){var o=document.createElement('option');o.textContent=n;sel.appendChild(o)});
   sel.value=Array.prototype.some.call(sel.options,function(o){return o.value===cur})?cur:'원장님 후기';$('badgeSw').style.background=BADGE_COL[sel.value]||'#4F29E5';
   var l=$('bdgList');l.innerHTML='';cs.forEach(function(c){var sp=document.createElement('span');sp.innerHTML='<i></i><b></b><button type="button" aria-label="카테고리 삭제">'+IC('close',14)+'</button>';sp.querySelector('i').style.background=c.col;sp.querySelector('b').textContent=c.name;
-    sp.querySelector('button').addEventListener('click',function(){bdgSave(bdgLoad().filter(function(x){return x.name!==c.name}));delete BADGE_COL[c.name];bdgRender();update();});l.appendChild(sp)});}
+    sp.querySelector('button').addEventListener('click',function(){bdgSave(bdgLoad().filter(function(x){return x.name!==c.name}));delete BADGE_COL[c.name];bdgRender();update();});l.appendChild(sp)});if(typeof badgeUI==='function')badgeUI();}
 function bdgCols(){$('bdgCols').innerHTML=BDG_PAL.map(function(c){var on=c===bdgCol;return '<button type="button" role="radio" data-c="'+c+'" aria-checked="'+on+'" aria-label="'+c+'" style="background:'+c+';--c:'+c+'">'+(on?IC('check',16):'')+'</button>'}).join('');
   $('bdgCols').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){bdgCol=b.dataset.c;bdgCols()})});}
 $('bdgAdd').addEventListener('click',function(){var f=$('bdgForm'),open=f.hidden;f.hidden=!open;this.setAttribute('aria-expanded',open);if(open){bdgCols();$('bdgName').focus();}});
