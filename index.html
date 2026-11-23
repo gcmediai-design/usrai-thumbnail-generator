@@ -573,7 +573,7 @@ function alphaBox(img){if(img._ab)return img._ab;var n=96,c=document.createEleme
   img._ab={bottom:(b+1)/n,cx:(l+r+1)/2/n,w:(r-l+1)/n};return img._ab;}
 function drawObjects(ctx,box,preview,onDark,CW,CH){
   if(!S.icon){
-    if(!preview)return;
+    if(!preview||noPH)return;
     ctx.save();ctx.setLineDash([16,12]);ctx.lineWidth=4;ctx.strokeStyle=onDark?'rgba(255,255,255,.6)':'rgba(30,33,36,.3)';ctx.fillStyle=onDark?'rgba(255,255,255,.12)':'rgba(255,255,255,.45)';
     rr(ctx,box.x,box.y,box.s,box.s,48);ctx.fill();ctx.save();ctx.clip();ctx.strokeStyle=onDark?'rgba(255,255,255,.14)':'rgba(70,76,83,.10)';ctx.lineWidth=box.s*.012;ctx.setLineDash([]);for(var hx=-box.s;hx<box.s;hx+=box.s*.045){ctx.beginPath();ctx.moveTo(box.x+hx,box.y+box.s);ctx.lineTo(box.x+hx+box.s,box.y);ctx.stroke();}ctx.restore();ctx.setLineDash([16,12]);rr(ctx,box.x,box.y,box.s,box.s,48);ctx.stroke();ctx.setLineDash([]);
     ctx.fillStyle=onDark?'rgba(255,255,255,.85)':'rgba(30,33,36,.55)';ctx.font='600 30px '+FONT;try{ctx.letterSpacing='0px'}catch(e){};ctx.textAlign='center';ctx.fillText('메인 오브젝트 자리',box.x+box.s/2,box.y+box.s/2+10);ctx.textAlign='left';ctx.restore();return;}
@@ -788,13 +788,15 @@ function check(res){
 }
 
 /* ---------- 실제 크기 미리보기 ---------- */
+var noPH=false;
 function realPreview(){
   var box=$('real');box.innerHTML='';
+  var _P=TPL[S.tpl],tcv=document.createElement('canvas');tcv.width=_P.w;tcv.height=_P.h;noPH=true;render(tcv.getContext('2d'),{preview:true,guide:$('optGuide').checked});var tsq=$('sq');if(_P.sq){tsq=document.createElement('canvas');tsq.width=600;tsq.height=600;renderSq(tsq.getContext('2d'));}noPH=false;
   function mk(w,h,cap,src,crop){var f=document.createElement('figure'),c=document.createElement('canvas'),d=window.devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';c.style.borderRadius=(w<120?12:20)+'px';
     var x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(src,0,0,c.width,c.height);f.appendChild(c);var fc=document.createElement('figcaption');fc.textContent=cap;f.appendChild(fc);return f;}
-  if(isCase(S.tpl)){box.appendChild(mk(488,275,'고객 사례 카드 · 데스크톱 488 × 275',$('cv')));box.appendChild(mk(342,192,'모바일 342 × 192',$('cv')));}
-  else{box.appendChild(mk(514,321,'칼럼 대표 · 데스크톱 514 × 321',$('cv')));box.appendChild(mk(342,214,'모바일 342 × 214',$('cv')));
-    var row=document.createElement('div');row.className='mockRow';var c96=mk(96,96,'',$('sq'));c96.querySelector('figcaption').remove();row.appendChild(c96);
+  if(isCase(S.tpl)){box.appendChild(mk(488,275,'고객 사례 카드 · 데스크톱 488 × 275',tcv));box.appendChild(mk(342,192,'모바일 342 × 192',tcv));}
+  else{box.appendChild(mk(514,321,'칼럼 대표 · 데스크톱 514 × 321',tcv));box.appendChild(mk(342,214,'모바일 342 × 214',tcv));
+    var row=document.createElement('div');row.className='mockRow';var c96=mk(96,96,'',tsq);c96.querySelector('figcaption').remove();row.appendChild(c96);
     var t=document.createElement('div');t.innerHTML='<div class="c">'+(S.tpl==='A2'?'진료실 칼럼':'진료실 칼럼')+'</div><div class="t"></div>';t.querySelector('.t').textContent=S.titles[S.tpl].replace(/\n/g,' ');row.appendChild(t);
     var f=document.createElement('figure');f.className='full';f.appendChild(row);var fc=document.createElement('figcaption');fc.textContent='칼럼 목록 · 96 × 96';f.appendChild(fc);box.appendChild(f);}
 }
@@ -886,7 +888,7 @@ setupDrop('photoDrop','photoFile',setPhoto);
 function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){el.classList.remove('show')},2400)}
 function fileBase(d){var bd={A1:['진료실칼럼','브랜드단색'],A2:['진료실칼럼','파스텔'],B:['고객사례','실사'],B2:['고객사례','오브젝트']}[S.tpl];
   var t=(S.titles[S.tpl]||'').replace(/[“”"'‘’「」『』]/g,'').replace(/[\\/:*?<>|\n\r\t]+/g,' ').replace(/[^0-9A-Za-z가-힣 ]/g,'').trim().split(/\s+/).slice(0,3).join('-');t=t.slice(0,18)||'제목없음';
-  return ymd(d)+'_'+bd[0]+'_'+bd[1]+'_'+t+(usingPreview()?'_시안':'');}
+  return '('+ymd(d)+') '+bd[0]+'_'+bd[1]+'_'+t+(usingPreview()?'_시안':'');}
 function ymd(d){d=d||new Date();return String(d.getFullYear()).slice(2)+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
 function slug(t){return (t||'').replace(/[“”"'‘’]/g,'').replace(/\s+/g,' ').trim().replace(/[\\/:*?<>|\n]/g,'').slice(0,24).trim().replace(/ /g,'_')}
 function toBlob(c){return new Promise(function(res){c.toBlob(res,'image/png')})}
