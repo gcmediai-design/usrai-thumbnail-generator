@@ -49,7 +49,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .sbar i{position:absolute;left:1px;width:4px;border-radius:2px;background:#EEF0F2;cursor:pointer;transition:background .12s}
 .sbar:hover i,.sbar.drag i,.panelBodyWrap:hover .sbar i{background:#B1B8BE}
 .sbar.drag{opacity:1}
-.sec{padding:16px 0;border-bottom:1px solid var(--line-subtle)}
+.sec{padding:16px 0;border-bottom:1px solid var(--line-subtle)}.sec:last-child{border-bottom:0}
 .sec:first-child{padding-top:16px}
 .sec h2{font-size:13px;font-weight:700;color:var(--text-strong);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
 .sec h2 .hint{font-weight:500;color:var(--text-tertiary);font-size:12px}
@@ -99,12 +99,12 @@ input[type=range]{width:100%;accent-color:var(--brand-primary)}
 .stageHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
 .stageHead h3{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;line-height:24px}.boardTag{display:inline-flex;align-items:center;height:20px;padding:2px 8px;border-radius:4px;background:#6d7882;color:#fff;font-size:12px;font-weight:400;line-height:16px;box-sizing:border-box}
 .stageHead .meta{font-size:12.5px;color:var(--text-tertiary);margin-top:4px}
-.stage{position:relative;background:#fff;border:1px solid var(--line-subtle);border-radius:10px;padding:16px}
+.stage{position:relative}
 .stage canvas.cvMain{display:block;width:100%;height:auto;border-radius:4px}
 .stage canvas.cvMain.pan{cursor:grab}
 .stage canvas.cvMain.pan:active{cursor:grabbing}
 .guidesOn{outline:0}
-.topRow{display:flex;gap:20px;align-items:flex-start}.topRow .stage{flex:0 1 auto;min-width:0}.stage canvas.cvMain{max-height:min(46vh,520px);width:auto!important;max-width:100%;margin:0 auto}.sqCard{flex:none}.sqCard h4{white-space:nowrap}@media(max-width:1100px){.topRow{flex-wrap:wrap}}
+.topRow{display:flex;gap:24px;align-items:flex-start;background:#fff;border:1px solid var(--line-subtle);border-radius:10px;padding:16px}.topRow .stage{flex:1 1 auto;min-width:0;max-width:min(104vh,1120px)}.stage canvas.cvMain{width:100%!important;height:auto;max-width:100%;margin:0}.topRow .sqCard{flex:1 1 auto;min-width:0;max-width:min(60vh,420px);background:none;border:0;border-radius:0;padding:0}.sqCard h4{white-space:nowrap}.topRow #sq{width:100%!important;height:auto!important}@media(max-width:1100px){.topRow{flex-wrap:wrap}}
 .subs{display:flex;gap:20px;margin-top:20px;flex-wrap:wrap;align-items:flex-start}
 .card{background:#fff;border:1px solid var(--line-subtle);border-radius:10px;padding:16px}
 .card h4{font-size:13px;font-weight:700;margin-bottom:10px}
@@ -115,6 +115,29 @@ input[type=range]{width:100%;accent-color:var(--brand-primary)}
 .mockRow{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;width:100%;padding:14px 4px;border-top:1px solid var(--line-subtle);border-bottom:1px solid var(--line-subtle)}
 .mockRow .c{font-size:12px;color:var(--brand-primary);font-weight:500}
 .mockRow .t{font-size:15px;font-weight:600;line-height:1.45}
+.real.lp{display:block}
+.lpCol .lpFeat{display:flex;gap:28px;align-items:center}
+.lpFeat .lpImgWrap{flex:0 1 514px;max-width:514px;min-width:0}
+.lpFeat .lpTxt{flex:1 1 auto;min-width:0}
+.lpImg{display:block;width:100%;height:auto;border-radius:16px}
+.lpCat{font-size:14px;font-weight:500;color:var(--brand-primary);line-height:1.4}
+.lpTitle{font-size:24px;font-weight:700;line-height:1.35;margin:10px 0 14px;color:var(--text-strong)}
+.lpDesc{font-size:14px;line-height:1.7;color:var(--text-sub);margin:0 0 16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.lpMeta{font-size:13px;color:var(--text-tertiary)}
+.lpList{margin-top:16px;border-top:1px solid var(--line-subtle)}
+.lpRow{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;padding:16px 2px;border-bottom:1px solid var(--line-subtle)}
+.lpThumbWrap{width:64px;height:64px;flex:none}
+.lpThumb{display:block;width:64px;height:64px;border-radius:10px}
+.lpRowTitle{font-size:15px;font-weight:700;line-height:1.4;margin:3px 0;color:var(--text-strong);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.lpChev{color:var(--text-tertiary);font-size:22px;line-height:1}
+.real.lpCase{display:block}
+.lpCase .lpCard{max-width:488px}
+.lpCase .lpImg{margin-bottom:16px}
+.lpCardTitle{font-size:18px;font-weight:700;line-height:1.4;margin:0 0 12px;color:var(--text-strong)}
+.lpTag{display:flex;align-items:center;gap:8px}
+.lpChip{font-size:13px;font-weight:600;color:var(--brand-primary);background:#EEECFF;border-radius:6px;padding:4px 10px}
+.lpRole{font-size:13px;color:var(--text-tertiary)}
+@media(max-width:640px){.lpCol .lpFeat{flex-direction:column;align-items:stretch}.lpFeat .lpImgWrap,.lpFeat .lpTxt{flex:1 1 100%}}
 .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .status{font-size:12.5px;color:var(--text-tertiary)}
 .status.err{display:inline-flex;align-items:center;gap:4px;color:#FC456A;font-size:13px;font-weight:400;line-height:1.4}.status.err .ic{flex:none}
@@ -403,7 +426,7 @@ details.qa label{display:flex;gap:8px;align-items:center;font-size:13px;line-hei
 
   <div class="subs">
     <div class="card" style="flex:1;min-width:300px">
-      <h4>랜딩 페이지 실제 크기</h4>
+      <h4>랜딩페이지 실제 적용 미리보기</h4>
       <div class="real" id="real"></div>
     </div>
   </div>
@@ -792,13 +815,25 @@ var noPH=false;
 function realPreview(){
   var box=$('real');box.innerHTML='';
   var _P=TPL[S.tpl],tcv=document.createElement('canvas');tcv.width=_P.w;tcv.height=_P.h;noPH=true;render(tcv.getContext('2d'),{preview:true,guide:$('optGuide').checked});var tsq=$('sq');if(_P.sq){tsq=document.createElement('canvas');tsq.width=600;tsq.height=600;renderSq(tsq.getContext('2d'));}noPH=false;
-  function mk(w,h,cap,src,crop){var f=document.createElement('figure'),c=document.createElement('canvas'),d=window.devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';c.style.borderRadius=(w<120?12:20)+'px';
-    var x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(src,0,0,c.width,c.height);f.appendChild(c);var fc=document.createElement('figcaption');fc.textContent=cap;f.appendChild(fc);return f;}
-  if(isCase(S.tpl)){box.appendChild(mk(488,275,'고객 사례 카드 · 데스크톱 488 × 275',tcv));box.appendChild(mk(342,192,'모바일 342 × 192',tcv));}
-  else{box.appendChild(mk(514,321,'칼럼 대표 · 데스크톱 514 × 321',tcv));box.appendChild(mk(342,214,'모바일 342 × 214',tcv));
-    var row=document.createElement('div');row.className='mockRow';var c96=mk(96,96,'',tsq);c96.querySelector('figcaption').remove();row.appendChild(c96);
-    var t=document.createElement('div');t.innerHTML='<div class="c">'+(S.tpl==='A2'?'진료실 칼럼':'진료실 칼럼')+'</div><div class="t"></div>';t.querySelector('.t').textContent=S.titles[S.tpl].replace(/\n/g,' ');row.appendChild(t);
-    var f=document.createElement('figure');f.className='full';f.appendChild(row);var fc=document.createElement('figcaption');fc.textContent='칼럼 목록 · 96 × 96';f.appendChild(fc);box.appendChild(f);}
+  function cvimg(src,sw,sh,cls){var c=document.createElement('canvas'),dp=window.devicePixelRatio||1;c.width=sw*dp;c.height=sh*dp;c.className=cls;var x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(src,0,0,c.width,c.height);return c;}
+  function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+  var _ttl=(S.titles[S.tpl]||'').replace(/\n/g,' ')||'제목을 입력해 주세요',_dt=new Date(),_ds=_dt.getFullYear()+'.'+String(_dt.getMonth()+1).padStart(2,'0')+'.'+String(_dt.getDate()).padStart(2,'0');
+  if(isCase(S.tpl)){box.className='real lp lpCase';
+    var card=el('article','lpCard'),iw=el('div','lpImgWrap');iw.appendChild(cvimg(tcv,_P.w,_P.h,'lpImg'));card.appendChild(iw);
+    card.appendChild(el('div','lpCardTitle',_ttl));
+    var tag=el('div','lpTag');tag.appendChild(el('span','lpChip','서울 OO의원'));tag.appendChild(el('span','lpRole','대표 원장'));card.appendChild(tag);
+    box.appendChild(card);
+  }else{box.className='real lp lpCol';
+    var feat=el('article','lpFeat'),fiw=el('div','lpImgWrap');fiw.appendChild(cvimg(tcv,_P.w,_P.h,'lpImg'));feat.appendChild(fiw);
+    var tx=el('div','lpTxt');tx.appendChild(el('div','lpCat','진료실 AI 활용'));tx.appendChild(el('div','lpTitle',_ttl));
+    tx.appendChild(el('p','lpDesc',($('sub')&&$('sub').value.trim())||'진료실에서 바로 쓸 수 있는 실전 가이드를 확인해 보세요.'));
+    tx.appendChild(el('div','lpMeta',_ds+' · 6분 읽기'));feat.appendChild(tx);box.appendChild(feat);
+    var list=el('div','lpList');
+    for(var _i=0;_i<2;_i++){var row=el('div','lpRow'),tw=el('div','lpThumbWrap');tw.appendChild(cvimg(tsq||tcv,tsq?600:_P.w,tsq?600:_P.h,'lpThumb'));row.appendChild(tw);
+      var rt=el('div','lpRowTxt');rt.appendChild(el('div','lpCat','진료실 AI 활용'));rt.appendChild(el('div','lpRowTitle',_ttl));rt.appendChild(el('div','lpMeta',_ds+' · 6분 읽기'));row.appendChild(rt);
+      row.appendChild(el('div','lpChev','›'));list.appendChild(row);}
+    box.appendChild(list);
+  }
 }
 
 /* ---------- 화면 갱신 ---------- */
